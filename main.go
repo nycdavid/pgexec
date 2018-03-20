@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -27,8 +26,14 @@ func main() {
 		os.Exit(1)
 	}
 	query := os.Args[1]
-	cmd := os.Args[2]
+	argCmd := os.Args[2]
 	executeQuery(query, dbo)
+	cmd := exec.Command(argCmd)
+	err = cmd.Run()
+	if err != nil {
+		os.Exit(1)
+	}
+	os.Exit(0)
 }
 
 func executeQuery(query string, dbo *sql.DB) {
